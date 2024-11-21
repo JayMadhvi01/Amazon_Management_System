@@ -1,0 +1,5 @@
+package AmazonSystem;
+
+class AmazonUtil {
+
+}
