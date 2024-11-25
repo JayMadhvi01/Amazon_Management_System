@@ -115,13 +115,12 @@ public class AmazonProduct {
 				int nRating = Integer.parseInt(products[7]);
 				float discountPrice = Float.parseFloat(products[8]);
 				float actualPrice = Float.parseFloat(products[9]);
+				product = new AmazonProduct(id, name, category, subCategory, imageURL, link, rating, nRating, discountPrice, actualPrice);
 			}
 		}
 		return product;
 	}
 	
-	public void setTitle(String[] Title) {}
-	public AmazonProduct() {}
 	
 	public String toString() {
         return "[" + id + ", " + name + ", " + category + ", " + subCategory + ", " + imageURL + ", " + link +

@@ -1,5 +1,8 @@
 package AmazonSystem;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+
 public class AmazonManager {
 public static void main(String[] args) {     
 	System.out.println("===========================================================================");
@@ -29,9 +32,38 @@ public static void main(String[] args) {
 	System.out.println("===========================================================================");
     System.out.println("Choose an option: ");
     
+    /*public void loadProductList(String csvFile) throws AmazonException {
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            String line;
+            int currentLine = 0;
+            while ((line = br.readLine()) != null) {
+                String[] data = AmazonUtil.lineReader(line, currentLine);
+                if (currentLine != 0) {
+                    if (data.length < NUMCOLS)
+                          continue;
+                    int id = (int) AmazonUtil.convertStrToFloat(data[0]);
+                    String name = data[1];
+                    AmazonProductCategory apc = new AmazonProductCategory(data[2]);
+                    AmazonProductSubCategory apsc = new AmazonProductSubCategory(data[3], apc);
+                    String imageURL = data[4];
+                    String link = data[5];
+                    float rating = AmazonUtil.convertStrToFloat(data[6]);
+                    int nRatings = (int) AmazonUtil.convertStrToFloat(data[7]);
+       
+                    float discountPrice = AmazonUtil.convertStrToFloat(data[8].substring(1));
+                    float actualPrice = AmazonUtil.convertStrToFloat(data[9].substring(1));
 
-
-
-
+                    AmazonProduct product = new AmazonProduct(id, name, apc, apsc, imageURL, link, rating, nRatings, discountPrice, actualPrice);
+                    bestsellers.add(product);
+                }
+                currentLine++;
+            }
+        } catch (FileNotFoundException e) {
+            throw new AmazonProductException("The file is not available/ File not Found: " + csvFile);
+        } catch (IOException e) {
+            throw new AmazonProductException("Can not read the file: " + e.getMessage());
+        }*/
+       
+   
 }
 }
