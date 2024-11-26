@@ -1,8 +1,8 @@
 package AmazonSystem;
 
 public class AmazonCartItem {
-     AmazonProduct product;
-     int quantity;
+     private AmazonProduct product;
+     private int quantity;
      
      AmazonCartItem(AmazonProduct product, int quantity){
     	 this.product = product;
