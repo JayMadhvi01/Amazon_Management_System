@@ -1,6 +1,8 @@
 package AmazonSystem;
 
 public class AmazonUtil {
+	private static final int NUMCOLS = 10;
+
 	public static float convertStrToFloat(String str) {
 		try {
 			return Float.parseFloat(str.replace(",", ""));
@@ -56,40 +58,37 @@ public class AmazonUtil {
 		return false;
 	}
 
-	public static String[] lineReader(String string, int convertFieldIndex) {
-		String[] str = new String[10];
+	public static String [] lineReader(String string) {
+
+		String[] str = new String[NUMCOLS];
 		int index = 0;
 		final char chComma = ',';
 		final char chQuotes = '"';
 		int start = 0;
 		int end = string.indexOf(chComma);
 		String value;
-		while (end != -1) {
-			if (string.charAt(start) == chQuotes) {
+		while (start<end) {
+			if (string.charAt(start)==chQuotes) {
 				start++;
-				end = string.indexOf(chQuotes, start);
+				end = string.indexOf(chQuotes, start+1); 
 			}
-			value = string.substring(start, end).trim();
-			if (index == convertFieldIndex) {
-				value = String.valueOf((value));
-			}
+			value = string.substring(start, end);
+			value = value.trim();
 			str[index++] = value;
-			if (end + 1 < string.length() && string.charAt(end + 1) == chComma) {
-				start = end + 2;
-			} else {
-				start = end + 1;
-			}
-			end = string.indexOf(chComma, start);
+			if (string.charAt(end)==chQuotes)
+				start = end+2;
+			else
+				start = end+1;
+			end = string.indexOf(chComma, start+1);
 		}
 		if (start < string.length()) {
-			value = string.substring(start).trim();
-			if (index == convertFieldIndex) {
-				value = String.valueOf((value));
-			}
-			str[index++] = value;
+			value = string.substring(start);
+			str[index++] = value; 
 		}
 		return str;
 	}
+
+
 
 }
 

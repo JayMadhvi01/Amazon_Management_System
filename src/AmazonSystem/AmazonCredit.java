@@ -4,11 +4,12 @@ public abstract class AmazonCredit {
 	enum PaymentType{
 		Cash, Check, Card;
 	}
-
+    private int id;
 	private float amount;
 	private PaymentType type;
 
-	AmazonCredit(float amount, PaymentType type){
+	AmazonCredit(int id, float amount, PaymentType type){
+		this.setId(id);
 		this.setAmount(amount);
 		this.setType(type);
 	}
@@ -29,10 +30,17 @@ public abstract class AmazonCredit {
 		this.type = type;
 	}
 
-
 	@Override
 	public String toString() {
-		return "AmazonCredit [amount=" + amount + ", type=" + type + "]";
+		return "AmazonCredit [id=" + id + ", amount=" + amount + ", type=" + type + "]";
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

@@ -3,19 +3,20 @@ package AmazonSystem;
 public class AmazonCheck extends AmazonCredit{
   private String accountNumber;
   
-  private AmazonCheck(String accountNumber, float amount, PaymentType type) {
-	  super(amount, PaymentType.Check);
+  private AmazonCheck(int id, String accountNumber, float amount, PaymentType type) {
+	  super(id, amount, PaymentType.Check);
 	  this.accountNumber = accountNumber;
   }
   
-  public AmazonCheck createCheck(String[] str) {
+  public static AmazonCheck createCheck(String[] str) {
 	   AmazonCheck amazoncheck = null;
-	   if(!(AmazonUtil.isValidString(str[0]) || AmazonUtil.isValidFloat(str[1]))) {
-		   return null;
+	   if(!(AmazonUtil.isValidFloat(str[2]) || AmazonUtil.isValidInt(str[0]) || AmazonUtil.isValidFloat(str[2]))) 
+	   {		   return null;
 	   }else {
-		   String accountNumber = str[0];
-		   float amount = Float.parseFloat(str[1]);
-		   amazoncheck = new AmazonCheck(accountNumber, amount, PaymentType.Check);
+		   int id =Integer.parseInt(str[0]);		   
+		   String accountNumber = str[1];
+		   float amount = Float.parseFloat(str[2]);
+		   amazoncheck = new AmazonCheck(id, accountNumber, amount, PaymentType.Check);
 	   }
 	   return amazoncheck;
   }

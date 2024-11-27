@@ -2,18 +2,20 @@ package AmazonSystem;
 
 public class AmazonCash extends AmazonCredit {
  
-private AmazonCash(float amount, PaymentType type) {
-	super(amount, PaymentType.Cash);
+private AmazonCash(int id, float amount, PaymentType type) {
+	super(id, amount, PaymentType.Cash);
 }
 
-public AmazonCash createCash(String[] str) {
+public static AmazonCash createCash(String[] str) {
 	   AmazonCash amazoncash = null;
-	   if(!(AmazonUtil.isValidFloat(str[0]))) {
+	   if(!(AmazonUtil.isValidFloat(str[1]) || AmazonUtil.isValidInt(str[0]))) {
 		   return null;
 	   }else {
-		  float amount = Float.parseFloat(str[0]);
-		   amazoncash = new AmazonCash(amount, PaymentType.Cash);
+		  int id = Integer.parseInt(str[0]);
+		  float amount = Float.parseFloat(str[1]);
+		   amazoncash = new AmazonCash(id, amount, PaymentType.Cash);
 	   }
 	   return amazoncash;
 }
+
 }

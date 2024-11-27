@@ -98,8 +98,8 @@ public class AmazonProduct {
 	public void setnRatings(int nRatings) {
 		this.nRatings = nRatings;
 	}
-	
-	public AmazonProduct createAmazonProduct(String[] products) {
+
+	/*public static AmazonProduct createAmazonProduct(String[] products) {
 		AmazonProduct product = null;
 		for(int i=0; i < products.length; i++) {
 			if(products[i] == null || products[i].isEmpty() || products[i].isBlank()) {
@@ -119,13 +119,36 @@ public class AmazonProduct {
 			}
 		}
 		return product;
-	}
-	
-	
+	}*/
+
+	public static AmazonProduct createAmazonProduct(String[] row) throws AmazonException {
+
+		AmazonProduct product = null;
+		int id = AmazonUtil.isValidInt(row[0]) ? Integer.parseInt(row[0].replace(",", "")) : 0;
+		String name = AmazonUtil.isValidString(row[1]) ? row[1] : "Unknown Product";
+
+		// Assuming category and subCategory are in columns 2 and 3 in the CSV
+		AmazonProductCategory category = new AmazonProductCategory(row[2]);
+		AmazonProductSubCategory subCategory = new AmazonProductSubCategory(row[3], category);
+
+		String imageURL = AmazonUtil.isValidString(row[4]) ? row[4] : "N/A";
+		String link = AmazonUtil.isValidString(row[5]) ? row[5] : "N/A";
+		float rating = AmazonUtil.isValidFloat(row[6]) ? Float.parseFloat(row[6].replace(",", "")) : 0.0f;
+		int nRatings = AmazonUtil.isValidInt(row[7]) ? Integer.parseInt(row[7].replace(",", "")) : 0;
+		float discountPrice = AmazonUtil.isValidFloat(row[8]) ? AmazonUtil.convertStrToFloat(row[8]) : 0.0f;
+		float actualPrice = AmazonUtil.isValidFloat(row[9]) ? AmazonUtil.convertStrToFloat(row[9]) : 0.0f;
+
+		// Create and return the product
+		product = new AmazonProduct(id, name, category, subCategory, imageURL, link, rating, nRatings, discountPrice, actualPrice);
+		return product;
+	} 
+
+
+
 	public String toString() {
-        return "[" + id + ", " + name + ", " + category + ", " + subCategory + ", " + imageURL + ", " + link +
-                ", " + rating + ", " + nRatings + ", " + discountPrice + ", " + actualPrice + "]";
-    }
+		return "[" + id + ", " + name + ", " + category + ", " + subCategory + ", " + imageURL + ", " + link +
+				", " + rating + ", " + nRatings + ", " + discountPrice + ", " + actualPrice + "]";
+	}
 }
 
 

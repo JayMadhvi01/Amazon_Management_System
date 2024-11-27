@@ -4,21 +4,22 @@ public class AmazonCard extends AmazonCredit{
 private String number;
 private String expiration;
 
-private AmazonCard(String number, String expiration, float amount, PaymentType type) {
-    super(amount, PaymentType.Card);
+private AmazonCard(int id, String number, String expiration, float amount, PaymentType type) {
+    super(id, amount, PaymentType.Card);
 	this.expiration = expiration;
 	this.number = number;
 }
 
-public AmazonCard createCard(String[] str) {
+public static AmazonCard createCard(String[] str) {
 	   AmazonCard amazoncard = null;
-	   if(!(AmazonUtil.isValidString(str[0]) || AmazonUtil.isValidString(str[1]) || AmazonUtil.isValidFloat(str[2]))) {
+	   if(!(AmazonUtil.isValidFloat(str[2]) || AmazonUtil.isValidInt(str[0]) || AmazonUtil.isValidFloat(str[2]))) {
 		   return null;
 	   }else {
-		   String accountNumber = str[0];
-		   String expiration = str[1];
+		   int id = Integer.parseInt(str[0]);
+		   String cardNumber = str[1];
+		   String expiration = str[2];
 		   float amount = Float.parseFloat(str[2]);
-		   amazoncard = new AmazonCard(accountNumber, expiration, amount, PaymentType.Card);
+		   amazoncard = new AmazonCard(id, cardNumber, expiration, amount, PaymentType.Card);
 	   }
 	   return amazoncard;
 }
