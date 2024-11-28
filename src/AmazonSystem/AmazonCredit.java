@@ -4,7 +4,7 @@ public abstract class AmazonCredit {
 	enum PaymentType{
 		Cash, Check, Card;
 	}
-    private int id;
+	private int id;
 	private float amount;
 	private PaymentType type;
 

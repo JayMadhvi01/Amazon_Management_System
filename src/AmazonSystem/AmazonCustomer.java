@@ -38,25 +38,45 @@ public class AmazonCustomer {
 	}
 
 	public void addCredit(AmazonCredit credit) {
-            credits.add(credit);
+		credits.add(credit);
 	}
 
 	public void showCredits(int customerID) {
-		   for(AmazonCredit credit : credits) {
-			   if(credit.getId() == customerID) {
-				   System.out.println(credit);
-			   }
-		   }
-	}
-	public void addProductInWishList(AmazonProduct product, int id) {
-		AmazonProduct products = null;
-		if(products.getId() == id) {
-			wishlist.add(products);
+		for(AmazonCredit credit : credits) {
+			if(credit.getId() == customerID) {
+				System.out.println(credit);
+			}
 		}
 	}
-	public void removeProductFromWishList(AmazonProduct product) {}
-	public boolean isProductInWishList(AmazonProduct product) {}
-	public void showWishList() {}
+	public void addProductInWishList(AmazonProduct product, int id) {
+		wishlist.add(product);
+	}
+
+	public void removeProductFromWishList(AmazonProduct product, int id) {
+		if(wishlist.isEmpty()) {
+			System.err.println("The Wishlist is already empty");
+		}else {
+			wishlist.remove(product);
+		}
+	}
+	public boolean isProductInWishList(AmazonProduct product, int id) {
+		if(wishlist.isEmpty()) {
+			System.err.println("The Wishlist is already empty");
+			return false;
+		}else {
+			return wishlist.contains(product);
+		}
+	}
+	public void showWishList() {
+		if(wishlist.isEmpty()) {
+			System.err.println("WishList for customerID :"+id+"is empty");
+		}else {
+			System.out.println("WishList for customerID :"+id+":");
+			for(AmazonProduct product : wishlist) {
+				System.out.println(product);
+			}
+		}
+	}
 	public void addItemInCart(AmazonCartItem item) {}
 	public void removeProductFromCart(AmazonProduct product) {}
 	public void showCart() {}
@@ -69,7 +89,6 @@ public class AmazonCustomer {
 
 	@Override
 	public String toString() {
-		return "AmazonCustomer [id=" + id + ", name=" + name + ", address=" + address + ", comments=" + comments
-				+ ", wishlist=" + wishlist + ", credits=" + credits + "]";
+		return "AmazonCustomer [id=" + id + ", name=" + name + ", address=" + address+"]";
 	}
 }

@@ -14,7 +14,6 @@ public class AmazonManager {
 	private static final int NUMCOLS = 0;
 	private ArrayList<AmazonCustomer> customers = new ArrayList<AmazonCustomer>();
 	private ArrayList<AmazonProduct> products = new ArrayList<AmazonProduct>();
-	private ArrayList<AmazonCash> credits = new ArrayList<AmazonCash>();
 	private ArrayList<AmazonCheck> checks = new ArrayList<AmazonCheck>();	
 	private ArrayList<AmazonCard> cards = new ArrayList<AmazonCard>();	
 
@@ -75,26 +74,34 @@ public class AmazonManager {
 	}
 
 	public void showProductList() {
-		for (AmazonProduct product : products) {
-			System.out.println(product);
+		if(products.isEmpty()) {
+			System.err.println("The Product List is Empty");
+		}else {
+			for (AmazonProduct product : products) {
+				System.out.println(product);
+			}
 		}
 	}
 	public void searchInProductList() {
-		System.out.print("Enter search term: ");
-		String searchTerm = sc.nextLine(); 
-		ArrayList<AmazonProduct> res = new ArrayList<>();
-		for (AmazonProduct product : products) {
-			if (product.toString().toLowerCase().contains(searchTerm.toLowerCase())) {
-				res.add(product);  
+		if(products.isEmpty()) {
+			System.err.println("The Product List is Empty");
+		}else {
+			System.out.print("Enter search term: ");
+			String searchTerm = sc.nextLine(); 
+			ArrayList<AmazonProduct> res = new ArrayList<AmazonProduct>();
+			for (AmazonProduct product : products) {
+				if (product.toString().toLowerCase().contains(searchTerm.toLowerCase())) {
+					res.add(product);  
+				}
 			}
-		}
 
-		if (res.isEmpty()) {
-			System.out.println("No products can be found.");
-		} else {
-			System.out.println("Search Results:");
-			for (AmazonProduct product : res) {
-				System.out.println(product); 
+			if (res.isEmpty()) {
+				System.err.println("No products can be found.");
+			} else {
+				System.out.println("Search Results:");
+				for (AmazonProduct product : res) {
+					System.out.println(product); 
+				}
 			}
 		}
 	}
@@ -114,8 +121,12 @@ public class AmazonManager {
 	}
 
 	public void showCustomer() {
-		for(AmazonCustomer customer : customers) {
-			System.out.println(customer);
+		if(customers.isEmpty()) {
+			System.err.println("The Customer list is empty");
+		}else {
+			for(AmazonCustomer customer : customers) {
+				System.out.println(customer);
+			}
 		}
 	}
 
@@ -140,53 +151,57 @@ public class AmazonManager {
 	}
 
 	public void addCreditToCustomer() {
-		Scanner sc = new Scanner(System.in);
-		System.out.print("Enter the Customer id: ");
-		String id = sc.next();
-		int cusID = (int) AmazonUtil.convertStrToFloat(id);
-		int pos = findCustomerID(cusID);
-		AmazonCustomer customer = customers.get(pos);
-		String value;
+		if(customers.isEmpty()) {
+			System.err.println("The cusotmer list does not exist");
+		}else {
+			Scanner sc = new Scanner(System.in);
+			System.out.print("Enter the Customer id: ");
+			String id = sc.next();
+			int cusID = (int) AmazonUtil.convertStrToFloat(id);
+			int pos = findCustomerID(cusID);
+			AmazonCustomer customer = customers.get(pos);
+			String value;
 
-		System.out.print("\n([1]: Cash, [2]: Check, [3]: Card) : ");
-		int num = sc.nextInt();
-		switch(num) {
-		case 1:
-			AmazonCash newCash = null;
-			System.out.print("Enter cash value: ");
-			value = sc.next();
-			String[] cash = {id, value};
-			newCash = AmazonCash.createCash(cash);
-			customer.addCredit(newCash);
-			System.out.println("Credit added with success");
-			break;
+			System.out.print("\n([1]: Cash, [2]: Check, [3]: Card) : ");
+			int num = sc.nextInt();
+			switch(num) {
+			case 1:
+				AmazonCash newCash = null;
+				System.out.print("Enter cash value: ");
+				value = sc.next();
+				String[] cash = {id, value};
+				newCash = AmazonCash.createCash(cash);
+				customer.addCredit(newCash);
+				System.out.println("Credit added with success");
+				break;
 
-		case 2:
-			AmazonCheck newCheck = null;
-			System.out.print("\nEnter the account number: ");
-			String ac = sc.next();
-			System.out.println("\nEnter the amount: ");
-			value = sc.next();
-			String[] check = {id, ac, value};
-			checks.add(AmazonCheck.createCheck(check));
-			customer.addCredit(newCheck);
-			System.out.println("Credit added with success");
+			case 2:
+				AmazonCheck newCheck = null;
+				System.out.print("\nEnter the account number: ");
+				String ac = sc.next();
+				System.out.println("\nEnter the amount: ");
+				value = sc.next();
+				String[] check = {id, ac, value};
+				checks.add(AmazonCheck.createCheck(check));
+				customer.addCredit(newCheck);
+				System.out.println("Credit added with success");
 
-			break;
+				break;
 
-		case 3:
-			AmazonCard newCard = null;
-			System.out.print("Enter the Amount: ");
-			value = sc.next();
-			System.out.print("Enter the Card number: ");
-			String number=sc.next();
-			System.out.println("Enter the Expiration Date: ");
-			String expiration = sc.next();
-			String[] card = {id, number, expiration, value};
-			cards.add(AmazonCard.createCard(card));
-			customer.addCredit(newCard);
-			System.out.println("Credit added with success");
-			break;
+			case 3:
+				AmazonCard newCard = null;
+				System.out.print("Enter the Amount: ");
+				value = sc.next();
+				System.out.print("Enter the Card number: ");
+				String number=sc.next();
+				System.out.println("Enter the Expiration Date: ");
+				String expiration = sc.next();
+				String[] card = {id, number, expiration, value};
+				cards.add(AmazonCard.createCard(card));
+				customer.addCredit(newCard);
+				System.out.println("Credit added with success");
+				break;
+			}
 		}
 	}
 	public void showCreditFromCustomer() {
@@ -198,20 +213,89 @@ public class AmazonManager {
 	}
 
 	public void addProductWishList() {
+		if(products.isEmpty()) {
+			System.err.println("The product list is empty");
+		}else if(customers.isEmpty()) {
+			System.err.println("The customer list is empty");
+		}else {
 		System.out.print("Enter the Customer id: ");
-		int id = sc.nextInt();
+		int id = sc.nextInt();	
+		AmazonCustomer customer = null;
+		for(AmazonCustomer c : customers) {
+			if(c.getId() == id) {
+				customer = c;
+			}
+		}
 		System.out.print("Enter the product ID to include in the Wishlist : ");
 		int prID = sc.nextInt();
+		AmazonProduct product = null;
+		for(AmazonProduct p : products) {
+			if(p.getId() == prID) {
+				product = p;
+				break;
+			}
+		}
+		customer.addProductInWishList(product, prID);
+		}
 	}
-	public void removeProductFromWishList() {}
-	public void showWishList() {}
-	public void addProductInCart() {}
+	public void removeProductFromWishList() {
+		System.out.print("Enter the Customer id: ");
+		int id = sc.nextInt();	
+		AmazonCustomer customer = null;
+		for(AmazonCustomer c : customers) {
+			if(c.getId() == id) {
+				customer = c;
+			}
+		}
+		System.out.print("Enter the product ID to remove from the Wishlist : ");
+		int prID = sc.nextInt();
+		AmazonProduct product = null;
+		for(AmazonProduct p : products) {
+			if(p.getId() == prID) {
+				product = p;
+				break;
+			}
+		}
+		customer.removeProductFromWishList(product, prID);
+	}
+	public void showWishList() {
+		System.out.println("Enter the customer id: ");
+		int customerID = sc.nextInt();
+		AmazonCustomer customer = null;
+		for(AmazonCustomer c : customers) {
+			if(c.getId() == customerID) {
+				customer = c;
+				break;
+			}
+		}
+		customer.showWishList();
+	}
+	public void addProductInCart() {
+		System.out.println("Enter the Cusomter ID: ");
+		String id = sc.next();
+		System.out.println("Enter the Product ID to buy from the cart : ");
+		String prID = sc.next();
+		System.out.println("Enter the number of items to put in cart : ");
+		int quantity = sc.nextInt();
+		for(AmazonCustomer c : customers) {
+			if(c.toString().toLowerCase().contains(id.toLowerCase())) {
+				break;
+			}
+		}
+		for(AmazonProduct p : products) {
+			if(p.toString().toLowerCase().contains(prID.toLowerCase())) {
+				break;
+			}
+		}
+
+	}
+
+
 	public void removeProductInCart() {}
 	public void showProductsInCart() {}
 	public void payCart() {}
 	public void addCommentToProduct() {}
 	public void showComments() {}
-	public void exit() {}
 
 	public static void main(String[] args) throws AmazonException {     
 		Scanner sc = new Scanner(System.in);
@@ -290,11 +374,5 @@ public class AmazonManager {
 		System.out.println("=======================================================================================");
 		System.out.println("|| [End of Application (Authors: Gopika Jayarajan 041142228 & Jay Madhvi 041138861)] ||");
 		System.out.println("=======================================================================================");
-
-
-
-
-
-
 	}
 }
